@@ -1,9 +1,52 @@
 <?php
+
+require_once('../config/app.php');
+
 session_start();
 
-$isLogged = false;
-if (!empty($_SESSION['user'])) {
-    $isLogged = true;
+$entryFlg = false;
+if (!empty($_REQUEST)) {
+    
+    $subject = $_REQUEST['subject'];
+    $email = $_REQUEST['email'];
+    $message = $_REQUEST['message'];
+    
+    // 上記変数の validate 必須！！
+    
+    
+    // csrfトークンを前ページで発行し、ここで検証を行わない場合、
+    // このページを直接叩かれるとお問い合わせ処理が行われてしまう。
+    // そのためSNS などで http://xxxxx/contact_entry.php?subject=◯ね&email=hogehoge@hogehogehoge.hoge&message=さっさと○ね
+    // などというリンクを短縮URLに変換し、友達や知らない人に踏ませることで
+    // 脅迫やいたずらが行われてしまう危険性がある
+    
+    // 全体的でmysql_xxx 系の関数を利用していますが、mysql_xxx系は非推奨です。
+    // mysqli_xxx 系を使うようにしましょう
+    $link = mysql_connect(DB_ADDR, DB_USER, DB_PASS);
+    if (!$link) {
+        die('接続失敗です。'.mysql_error());
+    }
+    
+    $db_selected = mysql_select_db(DB_NAME, $link);
+    if (!$db_selected){
+        die('データベース選択失敗です。'.mysql_error());
+    }
+    mysql_set_charset('utf8');
+    
+    $sql =  "INSERT INTO contacts(subject, email, message) ".
+            "VALUES('{$subject}', '{$email}', '{$message}')";
+    $result = mysql_query($sql);
+    if (!$result) {
+        die('クエリーが失敗しました。'.mysql_error());
+    }
+    
+    $entryFlg = true;
+    
+    mysql_close($link);
+}
+
+if ($entryFlg == false) {
+    header('location: ./');
 }
 
 ?>
@@ -11,7 +54,7 @@ if (!empty($_SESSION['user'])) {
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>お問い合わせ - 脆弱図書館</title>
+    <title>お問い合わせ完了 - 脆弱図書館</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -52,35 +95,13 @@ if (!empty($_SESSION['user'])) {
     
     
     <div class="container">
-        <h1>お問い合わせ</h1>
-        <form name="contactForm" id="contactForm" action="contact_entry.php" method="post">
-            <?php // 本来はcsrf_token をhiddenパラメータに設定して送信したりする csrf対策 ?>
-            <table class="table table-bordered table-striped">
-                <tr>
-                    <th>タイトル</th>
-                    <td>
-                        <input type="text" name="subject" value="" class="form-control" placeholder="○○の貸出について" required />
-                    </td>
-                </tr>
-                <tr>
-                    <th>メールアドレス</th>
-                    <td>
-                        <input type="email" name="email" value="" class="form-control" />
-                    </td>
-                </tr>
-                <tr>
-                    <th>問い合わせ内容</th>
-                    <td>
-                        <textarea name="message" id="message" class="form-control" rows="8" required></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="text-center">
-                        <input type="submit" value="送信" class="btn btn-primary" />
-                    </td>
-                </tr>
-            </table>
-        </form>
+        <h1>お問い合わせ完了</h1>
+        <div class="row">
+            <p>お問い合わせありがとうございました。</p>
+            <p>
+                担当のものから入力いただいたメールアドレス宛に折り返し連絡差し上げますので少々お待ちください。
+            </p>
+        </div>
     </div> <!-- /container -->
 
 </body>

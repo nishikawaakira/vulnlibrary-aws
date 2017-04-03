@@ -68,18 +68,18 @@ mysql_close($link);
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/">トップ</a></li>
-                    <li class="active"><a href="/search.php">検索</a></li>
+                    <li><a href="./">トップ</a></li>
+                    <li class="active"><a href="search.php">検索</a></li>
                     <?php if ($isLogged):?>
-                    <li><a href="/rent.php">借りた本一覧</a></li>
+                    <li><a href="rent.php">借りた本一覧</a></li>
                     <?php endif;?>
-                    <li><a href="/contact.php">お問い合わせ</a></li>
+                    <li><a href="contact.php">お問い合わせ</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <?php if ($isLogged):?>
-                        <li class="active"><a href="/logout.php">ログアウト <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="logout.php">ログアウト <span class="sr-only">(current)</span></a></li>
                         <?php else:?>
-                        <li><a href="/login.php">ログイン</a></li>
+                        <li><a href="login.php">ログイン</a></li>
                     <?php endif;?>
                 </ul>
             </div><!--/.nav-collapse -->

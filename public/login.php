@@ -70,19 +70,19 @@ if (!empty($_POST['user'])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">脆弱図書館</a>
+                <a class="navbar-brand" href="#">脆弱図書館</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">トップ</a></li>
-                    <li><a href="/search.php">検索</a></li>
-                    <li><a href="/contact.php">お問い合わせ</a></li>
+                    <li><a href="./">トップ</a></li>
+                    <li><a href="search.php">検索</a></li>
+                    <li><a href="contact.php">お問い合わせ</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <?php if ($isLogged):?>
-                        <li class="active"><a href="/logout.php">ログアウト <span class="sr-only">(current)</span></a></li>
+                        <li class="active"><a href="logout.php">ログアウト <span class="sr-only">(current)</span></a></li>
                         <?php else:?>
-                        <li><a href="/login.php">ログイン</a></li>
+                        <li class="active"><a href="login.php">ログイン</a></li>
                     <?php endif;?>
                 </ul>
             </div><!--/.nav-collapse -->
