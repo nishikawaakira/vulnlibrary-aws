@@ -1,6 +1,9 @@
 <?php
 
-define(DB_NAME, 'DB_NAME');
-define(DB_ADDR, 'DB_ADDR');
-define(DB_USER, 'DB_USER');
-define(DB_PASS, 'DB_PASS');
+define("DB_NAME", 'vulnlibrary');
+define("DB_ADDR", 'localhost');
+define("DB_USER", 'root');
+define("DB_PASS", 'root');
+
+ini_set("session.save_handler", "memcached");
+ini_set("session.save_path", ""); // memcachedのパスを設定
