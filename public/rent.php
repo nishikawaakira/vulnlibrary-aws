@@ -11,16 +11,16 @@ if (empty($_SESSION['user'])) {
 
 // 全体的でmysql_xxx 系の関数を利用していますが、mysql_xxx系は非推奨です。
 // mysqli_xxx 系を使うようにしましょう
-$link = mysql_connect(DB_ADDR, DB_USER, DB_PASS);
+$link = mysqli_connect(DB_ADDR, DB_USER, DB_PASS);
 if (!$link) {
-    die('接続失敗です。'.mysql_error());
+    die('接続失敗です');
 }
 
-$db_selected = mysql_select_db(DB_NAME, $link);
+$db_selected = mysqli_select_db($link, DB_NAME);
 if (!$db_selected){
-    die('データベース選択失敗です。'.mysql_error());
+    die('データベース選択失敗です。'.mysqli_error($link));
 }
-mysql_set_charset('utf8');
+mysqli_set_charset($link, 'utf8');
 
 $selectWord = '';
 $word = '';
@@ -35,18 +35,18 @@ $sql =  "SELECT b.name,r.reserved,r.returned,u.name as user_name FROM books AS b
         "WHERE b.del_flg IS NULL AND r.del_flg IS NULL AND u.del_flg IS NULL AND ".
         "r.user_id='".$_SESSION['user']['id']."' {$selectWord} ".
         "ORDER BY reserved DESC";
-$result = mysql_query($sql);
+$result = mysqli_query($link, $sql);
 if (!$result) {
-    die('クエリーが失敗しました。'.mysql_error());
+    die('クエリーが失敗しました。'.mysqli_error($link));
 }
 
 $datas = [];
-while ($tmp = mysql_fetch_assoc($result)) {
+while ($tmp = mysqli_fetch_assoc($result)) {
     if (!empty($tmp['name'])) {
         $datas[] = $tmp;
     }
 }
-mysql_close($link);
+mysqli_close($link);
 
 ?>
 <!DOCTYPE html>

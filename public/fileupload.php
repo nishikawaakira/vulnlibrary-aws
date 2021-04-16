@@ -1,19 +1,17 @@
 <?php
-require '../aws/aws-autoloader.php';
+require '../vendor/autoload.php';
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 use Aws\S3\ObjectUploader;
 use Aws\Credentials\CredentialProvider;
 
+require_once('../config/app.php');
 session_start();
 
-/*
 if (empty($_SESSION['user'])) {
     echo 'アクセス権がありません';
     exit;
 }
-*/
-
 
 $ini = '../config/credential.ini';
 $iniProvider = CredentialProvider::ini('AWS', $ini);
@@ -25,7 +23,7 @@ $s3Client = new S3Client([
     'credentials' => $iniProvider,
 ]);
 
-$bucket = '0424kagoshima-awstest';
+$bucket = BACKET_NAME;
 
 
 if (!empty($_FILES)) {

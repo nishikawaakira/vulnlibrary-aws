@@ -16,27 +16,27 @@ if (!empty($_POST['user'])) {
     
     // 全体的でmysql_xxx 系の関数を利用していますが、mysql_xxx系は非推奨です。
     // mysqli_xxx 系を使うようにしましょう
-    $link = mysql_connect(DB_ADDR, DB_USER, DB_PASS);
+    $link = mysqli_connect(DB_ADDR, DB_USER, DB_PASS);
     if (!$link) {
-        die('接続失敗です。'.mysql_error());
+        die('接続失敗です');
     }
     
-    $db_selected = mysql_select_db(DB_NAME, $link);
+    $db_selected = mysqli_select_db($link,  DB_NAME);
     if (!$db_selected){
-        die('データベース選択失敗です。'.mysql_error());
+        die('データベース選択失敗です。'.mysqli_error($link));
     }
-    mysql_set_charset('utf8');
+    mysqli_set_charset('utf8');
     
     $loginId = $_POST['user']['login_id'];
     $passwd = $_POST['user']['passwd'];
     
     $sql = "SELECT * FROM users WHERE login_id='{$loginId}' AND passwd='{$passwd}'";
-    $result = mysql_query($sql);
+    $result = mysqli_query($link, $sql);
     if (!$result) {
-        die('クエリーが失敗しました。'.mysql_error());
+        die('クエリーが失敗しました。'.mysqli_error($link));
     }
     
-    $row = mysql_fetch_assoc($result);
+    $row = mysqli_fetch_assoc($result);
     if ($row) {
         // ログインに成功
         $_SESSION['user'] = $row;
@@ -46,7 +46,7 @@ if (!empty($_POST['user'])) {
         // ログインに失敗
         $error = true;
     }
-    mysql_close($link);
+    mysqli_close($link);
 }
 ?>
 <!DOCTYPE html>
