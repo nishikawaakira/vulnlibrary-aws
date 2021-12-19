@@ -48,6 +48,15 @@ CREATE TABLE `reserves` (
   `modified` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- テーブルのデータのダンプ `reserves`
+--
+
+INSERT INTO `reserves` (`id`, `user_id`, `book_id`, `reserved`, `returned`, `del_flg`, `created`, `modified`) VALUES
+(1, 1, 1, '2018-12-20', '2018-12-25', NULL, NULL, NULL),
+(2, 1, 2, '2018-12-20', '2018-12-25', NULL, NULL, NULL),
+(3, 1, 3, '2018-12-20', '2018-12-25', NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
