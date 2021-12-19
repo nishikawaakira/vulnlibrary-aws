@@ -40,7 +40,7 @@ if (!empty($_POST['user'])) {
     if ($row) {
         // ログインに成功
         $_SESSION['user'] = $row;
-        header('location: /');
+        header('location: index.php');
     }
     else {
         // ログインに失敗

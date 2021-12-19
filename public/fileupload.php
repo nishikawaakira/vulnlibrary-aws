@@ -127,7 +127,16 @@ else {
 
         <?php if (!empty($objects)):?>
             <?php foreach ($objects['Contents'] as $object) :?>
+                <?php
+                $cmd = $s3Client->getCommand('GetObject', [
+                    'Bucket' => BACKET_NAME,
+                    'Key' => $object['Key']
+                ]);
+                $request = $s3Client->createPresignedRequest($cmd, '+20 minutes');
+                $presignedUrl = (string)$request->getUri();
+                ?>
                 <img width="300" src="https://s3-ap-northeast-1.amazonaws.com/<?php echo $bucket ?>/<?php echo $object['Key'] ?>" /><br />
+                <img width="300" src="<?php echo $presignedUrl;?>"><br>
             <?php endforeach; ?>
         <?php endif; ?>
     </div> <!-- /container -->

@@ -61,7 +61,7 @@ if (!empty($_SESSION['user'])) {
             <p>ここにはたくさんの本と自分が借りた図書の一覧が閲覧できるようになっています。</p>
             <p>あくまでも閲覧できるのは自分が借りた本だけです。セキュリティ上の観点から他人のは見ることができません。</p>
             <p>
-                <a class="btn btn-lg btn-primary" href="/search.php" role="button">借りられる本一覧へ &raquo;</a>
+                <a class="btn btn-lg btn-primary" href="search.php" role="button">借りられる本一覧へ &raquo;</a>
             </p>
         </div>
     
