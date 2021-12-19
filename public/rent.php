@@ -9,6 +9,11 @@ if (empty($_SESSION['user'])) {
     exit;
 }
 
+$user_id = $_GET['id'];
+if (empty($user_id)) {
+    die('idが未入力です');
+}
+
 // 全体的でmysql_xxx 系の関数を利用していますが、mysql_xxx系は非推奨です。
 // mysqli_xxx 系を使うようにしましょう
 $link = mysqli_connect(DB_ADDR, DB_USER, DB_PASS);
@@ -33,7 +38,7 @@ $sql =  "SELECT b.name,r.reserved,r.returned,u.name as user_name FROM books AS b
         "LEFT JOIN reserves AS r ON b.id=r.id ".
         "LEFT JOIN users AS u ON u.id=r.user_id ".
         "WHERE b.del_flg IS NULL AND r.del_flg IS NULL AND u.del_flg IS NULL AND ".
-        "r.user_id='".$_SESSION['user']['id']."' {$selectWord} ".
+        "r.user_id='".$user_id."' {$selectWord} ".
         "ORDER BY reserved DESC";
 $result = mysqli_query($link, $sql);
 if (!$result) {

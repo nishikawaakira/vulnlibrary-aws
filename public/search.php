@@ -71,7 +71,7 @@ mysqli_close($link);
                     <li><a href="./">トップ</a></li>
                     <li class="active"><a href="search.php">検索</a></li>
                     <?php if ($isLogged):?>
-                    <li><a href="rent.php">借りた本一覧</a></li>
+                        <li><a href="rent.php?<?php echo $_SESSION['user']['id'];?>">借りた本一覧</a></li>
                     <?php endif;?>
                     <li><a href="contact.php">お問い合わせ</a></li>
                 </ul>

@@ -89,7 +89,7 @@ else {
                 <ul class="nav navbar-nav">
                     <li><a href="./">トップ</a></li>
                     <li><a href="search.php">検索</a></li>
-                    <li><a href="rent.php">借りた本一覧</a></li>
+                    <li><a href="rent.php?<?php echo $_SESSION['user']['id'];?>">借りた本一覧</a></li>
                     <li class="active"><a href="contact.php">お問い合わせ</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
