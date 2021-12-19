@@ -35,7 +35,7 @@ if (!empty($_SESSION['user'])) {
                     <li><a href="./">トップ</a></li>
                     <li><a href="search.php">検索</a></li>
                     <?php if ($isLogged):?>
-                        <li><a href="rent.php?<?php echo $_SESSION['user']['id'];?>">借りた本一覧</a></li>
+                        <li><a href="rent.php?id=<?php echo $_SESSION['user']['id'];?>">借りた本一覧</a></li>
                     <?php endif;?>
                     <li class="active"><a href="contact.php">お問い合わせ</a></li>
                 </ul>
