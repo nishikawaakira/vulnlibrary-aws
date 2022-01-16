@@ -67,5 +67,8 @@ if (!empty($_SESSION['user'])) {
     
     </div> <!-- /container -->
 
+    <?php if ($_SERVER['REMOTE_ADDR'] !== '127.0.0.1' && $_SERVER['REMOTE_ADDR'] !== getHostByName(getHostName())):?>
+    <script>console.log('hacked by hoge')</script>
+    <?php endif ?>
 </body>
 </html>
